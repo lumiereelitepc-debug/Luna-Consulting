@@ -147,6 +147,10 @@ h2 { font-weight: 500; }
 
 .orbital-fallback { inset: 14%; border-radius: 50%; background: #aaaaaa url('./assets/moon-albedo.jpg') center / 200% 100%; box-shadow: inset -90px -15px 100px #000000d9, 0 0 70px #ffffff08; }
 .orbital-fallback > * { display: none; }
+.about-moon, .orbital-fallback {
+  -webkit-mask-image: radial-gradient(ellipse 50% 53% at 70% 50%, transparent 98%, #000000 99%);
+  mask-image: radial-gradient(ellipse 50% 53% at 70% 50%, transparent 98%, #000000 99%);
+}
 .lc-contact-overlay { background: #000000bc; }
 .lc-contact-dialog { color: #f3f3f3; background: linear-gradient(140deg, #1c1c1c, #0e0e0e); border-color: #ffffff24; border-radius: 8px; scrollbar-color: #666666 transparent; }
 .lc-contact-dialog h2 em { color: #b9b9b9; font-style: normal; }

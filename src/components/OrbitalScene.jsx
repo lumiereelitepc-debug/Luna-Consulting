@@ -47,15 +47,12 @@ export default function OrbitalScene() {
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
     camera.position.set(0, 0, 7.1);
 
-    // A single, neutral key light creates the lunar terminator. A small amount
-    // of fill keeps the dark limb legible without flattening the shadows.
-    scene.add(new THREE.AmbientLight(0xffffff, 0.045));
+    // Backlighting from the left forms a waning crescent. Minimal earthshine
+    // leaves the unlit hemisphere dark without adding a second bright limb.
+    scene.add(new THREE.AmbientLight(0xffffff, 0.0015));
     const sunlight = new THREE.DirectionalLight(0xffffff, 3.1);
-    sunlight.position.set(-3.7, 1.4, 3.4);
+    sunlight.position.set(-5.4, 0.45, -4.6);
     scene.add(sunlight);
-    const rim = new THREE.DirectionalLight(0xffffff, 0.11);
-    rim.position.set(3, 0.8, -4);
-    scene.add(rim);
 
     const geometry = new THREE.SphereGeometry(1.72, 128, 96);
     const material = new THREE.MeshStandardMaterial({ color: 0xe8e8e8, roughness: 1, metalness: 0 });
@@ -214,7 +211,7 @@ export default function OrbitalScene() {
     return cleanup;
   }, []);
 
-  return <div className="orbital-scene" ref={host} role="img" aria-label="Luna en 3D con superficie de cráteres e iluminación lateral">
+  return <div className="orbital-scene" ref={host} role="img" aria-label="Luna menguante en 3D, con cráteres y un arco iluminado a la izquierda">
     {!available && <div className="orbital-fallback" />}
   </div>;
 }

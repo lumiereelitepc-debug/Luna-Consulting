@@ -32,7 +32,7 @@ npm run preview
 ## Incluye
 
 - Logo lunar propio en `public/luna-symbol.png` y favicon SVG.
-- Luna 3D con textura de cráteres, iluminación lateral y rotación lenta, hecha con Three.js. Responde sutilmente al cursor, pausa fuera de pantalla y cuando la pestaña está oculta, respeta cambios de movimiento reducido y tiene una alternativa visual cuando WebGL no está disponible.
+- Luna menguante 3D con textura de cráteres, un arco iluminado a la izquierda y rotación lenta, hecha con Three.js. Responde sutilmente al cursor, pausa fuera de pantalla y cuando la pestaña está oculta, respeta cambios de movimiento reducido y tiene una alternativa visual cuando WebGL no está disponible.
 - Seis servicios desplegables, cinco etapas de metodología con pestañas, entregables y navegación móvil.
 - Modal para preparar y descargar un briefing local en TXT. **No envía datos, mensajes ni correos.** Para recibir consultas se necesita conectar un servicio de envío y proporcionar el destino real.
 - Fuentes alojadas en el proyecto, sin solicitudes a Google Fonts.
