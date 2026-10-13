@@ -1,6 +1,12 @@
 # Luna Consulting
 
-Web de consultoría en español con identidad visual propia, glassmorphism, escena 3D interactiva y diseño adaptable.
+Web de consultoría empresarial integral en español con identidad visual propia, glassmorphism, escena 3D interactiva y diseño adaptable.
+
+## Oferta
+
+Diagnóstico estratégico, investigación de clientes y experiencia, mejora de operación y capacitación, desarrollo comercial y fidelización, marketing y presencia digital, y plan de mejora con seguimiento.
+
+La metodología sigue cinco etapas: investigación, análisis, diagnóstico, estrategia e implementación con medición. La sección «Qué recibes» presenta los entregables y los indicadores. Alcance, plazos e inversión se acuerdan para cada proyecto. La propuesta web se refiere a estructura y contenido; no implica desarrollo o alojamiento incluidos.
 
 ## Desarrollo
 
@@ -27,7 +33,7 @@ npm run preview
 
 - Logo lunar propio en `public/luna-symbol.png` y favicon SVG.
 - Escultura orbital 3D hecha con Three.js, con respuesta al cursor, pausa fuera de pantalla y alternativa visual cuando WebGL no está disponible.
-- Servicios desplegables, metodología con pestañas y navegación móvil.
+- Seis servicios desplegables, cinco etapas de metodología con pestañas, entregables y navegación móvil.
 - Modal para preparar y descargar un briefing local en TXT. **No envía datos, mensajes ni correos.** Para recibir consultas se necesita conectar un servicio de envío y proporcionar el destino real.
 - Fuentes alojadas en el proyecto, sin solicitudes a Google Fonts.
 - Foco visible, navegación con teclado y respeto a la preferencia de movimiento reducido.

@@ -176,7 +176,7 @@ export default function ContactDialog({ open, onClose }) {
           <>
             <p className="lc-contact-eyebrow"><span /> HABLEMOS DE LO QUE SIGUE</p>
             <h2 id={`${id}-title`}>Las grandes ideas<br />empiezan <em>contigo.</em></h2>
-            <p id={`${id}-description`} className="lc-contact-description">Cuéntanos dónde estás y hacia dónde quieres ir. Dale forma al siguiente capítulo de tu negocio.</p>
+            <p id={`${id}-description`} className="lc-contact-description">Cuéntanos qué quieres mejorar en tu operación, servicio, ventas o presencia digital. Preparemos el punto de partida de tu diagnóstico.</p>
 
             <form className="lc-contact-form" onSubmit={handleSubmit}>
               <div className="lc-contact-field-row">
@@ -191,7 +191,7 @@ export default function ContactDialog({ open, onClose }) {
                 <input id={`${id}-company`} name="company" value={fields.company} onChange={updateField} autoComplete="organization" placeholder="El nombre de tu proyecto" maxLength={160} />
               </label>
               <label className="lc-contact-field" htmlFor={`${id}-challenge`}>¿Cuál es tu próximo reto? <span aria-hidden="true">*</span>
-                <textarea id={`${id}-challenge`} name="challenge" value={fields.challenge} onChange={updateField} placeholder="Tus objetivos, esa idea que no te deja dormir, lo que quieres transformar…" required rows={3} maxLength={4000} />
+                <textarea id={`${id}-challenge`} name="challenge" value={fields.challenge} onChange={updateField} placeholder="¿Qué está pasando en tu negocio? ¿Qué quieres mejorar? ¿Qué necesitas entender de tus clientes?" required rows={3} maxLength={4000} />
               </label>
               <p className="lc-contact-local-note">
                 <svg width="15" height="15" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="5" y="10" width="14" height="11" rx="2" stroke="currentColor" strokeWidth="1.5" /><path d="M8 10V7a4 4 0 1 1 8 0v3m-4 5v2" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" /></svg>
