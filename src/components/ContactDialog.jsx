@@ -175,7 +175,7 @@ export default function ContactDialog({ open, onClose }) {
         ) : (
           <>
             <p className="lc-contact-eyebrow"><span /> HABLEMOS DE LO QUE SIGUE</p>
-            <h2 id={`${id}-title`}>Las grandes ideas<br />empiezan <em>contigo.</em></h2>
+            <h2 id={`${id}-title`}>Empecemos por<br /><em>tu negocio.</em></h2>
             <p id={`${id}-description`} className="lc-contact-description">Cuéntanos qué quieres mejorar en tu operación, servicio, ventas o presencia digital. Preparemos el punto de partida de tu diagnóstico.</p>
 
             <form className="lc-contact-form" onSubmit={handleSubmit}>

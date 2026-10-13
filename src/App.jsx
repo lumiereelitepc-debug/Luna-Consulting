@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ArrowDown, ArrowRight, Minus, Menu, X, Compass, Orbit, Layers3, MoveUpRight, Check, Users, ChartNoAxesCombined, Monitor } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, ArrowRight, Minus, Menu, X, Compass, Orbit, Layers3, Moon, MoveUpRight, Check, Users, ChartNoAxesCombined, Monitor, Asterisk } from 'lucide-react';
 import ContactDialog from './components/ContactDialog.jsx';
 
 const OrbitalScene = lazy(() => import('./components/OrbitalScene.jsx'));
@@ -69,6 +69,7 @@ export default function App() {
 
   useEffect(() => {
     if (!menuOpen) return;
+    document.querySelector('#main-navigation a')?.focus();
     const onKey = (event) => {
       if (event.key === 'Escape') { setMenuOpen(false); menuButton.current?.focus(); }
     };
@@ -85,7 +86,7 @@ export default function App() {
       <div className="header-inner">
         <Logo />
         <nav className={`desktop-nav ${menuOpen ? 'nav-open' : ''}`} id="main-navigation" aria-label="Navegación principal">
-          {[['servicios', 'Qué hacemos'], ['metodo', 'Cómo trabajamos'], ['entregables', 'Qué recibes'], ['nosotros', 'Nuestra esencia']].map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} className={activeSection === id ? 'nav-active' : ''}>{label}</a>)}
+          {[['servicios', 'Servicios'], ['metodo', 'Metodología'], ['entregables', 'Entregables'], ['nosotros', 'La firma']].map(([id, label]) => <a key={id} href={`#${id}`} onClick={() => setMenuOpen(false)} className={activeSection === id ? 'nav-active' : ''}>{label}</a>)}
           <button className="mobile-contact" onClick={openContact}>Hablemos <ArrowUpRight size={17} /></button>
         </nav>
         <div className="header-actions"><button className="button button-outline header-contact" onClick={openContact}>Hablemos <ArrowUpRight size={17} /></button>
@@ -101,27 +102,25 @@ export default function App() {
         <div className="hero-main page-width">
           <div className="hero-copy">
             <p className="hero-eyebrow"><span className="status-dot" /> CONSULTORÍA EMPRESARIAL INTEGRAL</p>
-            <h1>Tu siguiente<br />capítulo empieza<br />con <span className="clarity-word">claridad<svg viewBox="0 0 270 14" aria-hidden="true"><path d="M2 9Q135 -5 268 7" /></svg></span>.</h1>
-            <p className="hero-description">Conocemos tu negocio, escuchamos a tus clientes<br className="desktop-break" /> y conectamos operación, ventas y presencia digital<br className="desktop-break" /> en un plan de mejora con acciones medibles.</p>
+            <h1><span className="hero-heading-line">Visión estratégica.</span><span className="hero-heading-line executive-text">Acción medible.</span></h1>
+            <p className="hero-description">Diagnóstico empresarial y estrategias basadas en información<br className="desktop-break" /> para fortalecer la operación, la experiencia del cliente<br className="desktop-break" /> y el desempeño comercial de tu negocio.</p>
             <div className="hero-buttons">
-              <button className="button button-lime" onClick={openContact}>Hablemos de tu negocio <ArrowUpRight size={20} /></button>
-              <a className="hero-secondary" href="#servicios">Explora nuestros servicios <ArrowDown size={16} /></a>
+              <button className="button button-primary" onClick={openContact}>Analicemos tu negocio <ArrowUpRight size={20} /></button>
+              <a className="hero-secondary" href="#servicios">Nuestros servicios <ArrowDown size={16} /></a>
             </div>
-            <p className="hero-note"><span className="small-cross">+</span> Investigación. Acciones priorizadas. Indicadores claros.</p>
+            <p className="hero-note"><span className="small-cross">+</span> Información rigurosa. Prioridades definidas. Seguimiento.</p>
           </div>
           <div className="hero-visual">
-            <div className="visual-orbit orbit-one" aria-hidden="true" />
-            <div className="visual-orbit orbit-two" aria-hidden="true" />
-            <span className="visual-coordinate coordinate-top">VISIÓN / DIRECCIÓN / EVOLUCIÓN</span>
+            <span className="visual-coordinate coordinate-top">PERSPECTIVA / ANÁLISIS / DIRECCIÓN</span>
             <span className="visual-cross cross-top" aria-hidden="true">+</span>
-            <Suspense fallback={<div className="orbital-scene" aria-hidden="true"><div className="orbital-fallback"><div /><span /><i /></div></div>}><OrbitalScene /></Suspense>
-            <div className="glass-badge badge-perspective"><div className="badge-icon"><Orbit size={20} strokeWidth={1.3} /></div><div><span>PERSPECTIVA LUNA</span><strong>Todo empieza con una visión.</strong></div><span className="badge-live" /></div>
-            <div className="glass-badge badge-progress"><span className="progress-label">IDEAS QUE SE MUEVEN</span><div className="mini-chart" aria-hidden="true">{[22, 30, 26, 43, 38, 58, 65, 77, 90].map((height, i) => <i key={i} style={{ '--bar-height': `${height}%`, '--bar-delay': `${i * 0.08}s` }} />)}</div><span className="progress-arrow"><MoveUpRight size={21} /></span></div>
-            <span className="visual-coordinate coordinate-bottom"><span className="tiny-dot" /> EN CONSTANTE EVOLUCIÓN</span>
+            <Suspense fallback={<div className="orbital-scene" aria-hidden="true"><div className="orbital-fallback" /></div>}><OrbitalScene /></Suspense>
+            <div className="glass-badge badge-perspective"><div className="badge-icon"><Moon size={20} strokeWidth={1.3} /></div><div><span>DECISIONES CON FUNDAMENTO</span><strong>Investigación · Estrategia · Medición</strong></div><span className="badge-live" /></div>
+            <div className="glass-badge badge-progress"><span className="progress-label">VISIÓN INTEGRAL</span><div className="analysis-dimensions"><span>Operación</span><span>Clientes</span><span>Comercial</span><span>Digital</span></div><span className="progress-arrow"><MoveUpRight size={19} /></span></div>
+            <span className="visual-coordinate coordinate-bottom"><span className="tiny-dot" /> LUNA CONSULTING / VISIÓN EMPRESARIAL</span>
           </div>
         </div>
         <div className="hero-bottom page-width">
-          <p>Una mirada distinta.<br /><span>Posibilidades reales.</span></p>
+          <p>Consultoría empresarial.<br /><span>Una perspectiva integral.</span></p>
           <div className="hero-disciplines"><span><i>01</i> Diagnóstico</span><span><i>02</i> Estrategia</span><span><i>03</i> Implementación</span></div>
           <a className="scroll-link" href="#servicios" aria-label="Desplazarse a nuestros servicios"><ArrowDown size={20} /></a>
         </div>
@@ -129,7 +128,7 @@ export default function App() {
 
       <section id="servicios" className="services section-light">
         <div className="page-width">
-          <div className="section-heading reveal"><div><SectionLabel light>QUÉ HACEMOS</SectionLabel><h2>Entendemos tu negocio.<br /><span>Conectamos sus oportunidades.</span></h2></div><p>Una mirada integral a la estrategia, los clientes,<br />la operación y los canales comerciales y digitales.<br />Cada propuesta parte de lo que tu negocio necesita.</p></div>
+          <div className="section-heading reveal"><div><SectionLabel light>ÁREAS DE CONSULTORÍA</SectionLabel><h2>Diagnóstico integral.<br /><span>Estrategia de negocio.</span></h2></div><p>Una mirada integral a la estrategia, los clientes,<br />la operación y los canales comerciales y digitales.<br />Cada propuesta parte de lo que tu negocio necesita.</p></div>
           <div className="service-cards">
             {services.map((service, index) => { const Icon = service.icon; const expanded = expandedService === index; return <article className="service-card reveal" data-expanded={expanded} key={service.number} style={{ '--reveal-delay': `${index % 3 * 100}ms` }}>
               <div className="service-top"><div className="service-icon"><Icon size={29} strokeWidth={1.2} /></div><span className="service-number">/ {service.number}</span></div>
@@ -139,13 +138,13 @@ export default function App() {
               <button className="service-more" aria-expanded={expanded} aria-controls={`service-detail-${index}`} onClick={() => setExpandedService(expanded ? null : index)}><span>{expanded ? 'Ver menos' : 'Descubre el enfoque'}</span><span className="service-more-icon">{expanded ? <Minus size={19} /> : <ArrowUpRight size={19} />}</span></button>
             </article>; })}
           </div>
-          <div className="service-footnote reveal"><span className="footnote-cross">✳</span><p>Un diagnóstico, una estrategia y un camino para avanzar.<br /><strong>Alcance, tiempos e inversión definidos contigo.</strong></p><a href="#metodo">Conoce nuestra forma de trabajar <ArrowRight size={18} /></a></div>
+          <div className="service-footnote reveal"><span className="footnote-cross" aria-hidden="true"><Asterisk size={26} strokeWidth={1.2} /></span><p>Un diagnóstico, una estrategia y un camino para avanzar.<br /><strong>Alcance, tiempos e inversión definidos contigo.</strong></p><a href="#metodo">Conoce nuestra forma de trabajar <ArrowRight size={18} /></a></div>
         </div>
       </section>
 
       <section id="metodo" className="method">
         <div className="page-width">
-          <div className="section-heading reveal"><div><SectionLabel>CÓMO TRABAJAMOS</SectionLabel><h2>Información para entender.<br /><span>Estrategia para avanzar.</span></h2></div><p>Cinco etapas que conectan investigación,<br />análisis, diagnóstico, estrategia<br />e implementación con medición.</p></div>
+          <div className="section-heading reveal"><div><SectionLabel>NUESTRA METODOLOGÍA</SectionLabel><h2>De la información<br /><span>a la decisión.</span></h2></div><p>Cinco etapas que conectan investigación,<br />análisis, diagnóstico, estrategia<br />e implementación con medición.</p></div>
           <div className="method-layout reveal">
             <div className="method-steps" role="tablist" aria-orientation="vertical" aria-label="Etapas de nuestra metodología">{steps.map((item, index) => <button key={item.name} role="tab" id={`step-tab-${index}`} aria-selected={activeStep === index} aria-controls="method-panel" tabIndex={activeStep === index ? 0 : -1} className={activeStep === index ? 'step-active' : ''} onClick={() => setActiveStep(index)} onKeyDown={(event) => { if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) { event.preventDefault(); const next = event.key === 'Home' ? 0 : event.key === 'End' ? steps.length - 1 : (index + (['ArrowDown', 'ArrowRight'].includes(event.key) ? 1 : steps.length - 1)) % steps.length; setActiveStep(next); document.getElementById(`step-tab-${next}`)?.focus(); } }}><span className="step-number">0{index + 1}</span><span>{item.name}</span><ArrowUpRight size={21} /></button>)}</div>
             <div className="method-panel glass-panel" id="method-panel" role="tabpanel" aria-labelledby={`step-tab-${activeStep}`} tabIndex={0}>
@@ -159,7 +158,7 @@ export default function App() {
 
       <section id="entregables" className="deliverables section-light">
         <div className="page-width">
-          <div className="section-heading reveal"><div><SectionLabel light>QUÉ RECIBES</SectionLabel><h2>Más que ideas.<br /><span>Herramientas para decidir.</span></h2></div><p>Documentos, recomendaciones y capacitación<br />para convertir la información en decisiones.<br />Los entregables se definen según el alcance acordado.</p></div>
+          <div className="section-heading reveal"><div><SectionLabel light>ENTREGABLES DEL PROYECTO</SectionLabel><h2>Recomendaciones concretas.<br /><span>Decisiones respaldadas.</span></h2></div><p>Documentos, recomendaciones y capacitación<br />para convertir la información en decisiones.<br />Los entregables se definen según el alcance acordado.</p></div>
           <div className="deliverable-grid">{deliverables.map((item, index) => <article key={item.number} className="deliverable-card reveal" style={{ '--reveal-delay': `${index % 2 * 100}ms` }}><div className="deliverable-heading"><span className="deliverable-number">{item.number}</span><h3>{item.title}</h3></div><ul>{item.items.map((text) => <li key={text}><Check size={15} />{text}</li>)}</ul></article>)}</div>
           <div className="deliverable-note reveal"><span className="label-square" /><p>Tu proyecto, a tu medida. Definimos contigo el alcance, los tiempos y la inversión después de la reunión inicial.</p><button onClick={openContact}>Preparemos tu diagnóstico <ArrowUpRight size={17} /></button></div>
         </div>
@@ -167,15 +166,15 @@ export default function App() {
 
       <section id="nosotros" className="about section-light">
         <div className="page-width about-layout">
-          <div className="about-art reveal" aria-hidden="true"><div className="about-art-grid" /><div className="about-moon"><span /></div><span className="about-art-label">PERSPECTIVA / PROPÓSITO</span><span className="about-art-bottom">THE LUNA WAY <ArrowUpRight size={17} /></span><div className="about-floating-label glass-badge"><span className="status-dot" /> Cerca de ti. Más allá de lo evidente.</div></div>
-          <div className="about-copy reveal"><SectionLabel light>NUESTRA ESENCIA</SectionLabel><h2>Cambiamos la mirada.<br /><span>Ampliamos lo posible.</span></h2><p>La luna nos recuerda que siempre hay otra forma de ver las cosas. Para nosotros, esa nueva perspectiva empieza por investigar, escuchar a tus clientes y entender cómo funciona tu negocio.</p><p>En Luna Consulting conectamos diagnóstico, experiencia del cliente, operación, desarrollo comercial y presencia digital. Nuestro trabajo convierte los hallazgos en recomendaciones, capacitación y un plan de mejora que puedas usar para decidir.</p><div className="about-values"><span><span className="value-dot" /> Información, no suposiciones</span><span><span className="value-dot" /> Cercanía real</span><span><span className="value-dot" /> Acciones medibles</span></div><button className="text-button" onClick={openContact}>Conversemos sobre tu negocio <ArrowUpRight size={20} /></button></div>
+          <div className="about-art reveal" aria-hidden="true"><div className="about-art-grid" /><div className="about-moon" /><span className="about-art-label">PERSPECTIVA / PROPÓSITO</span><span className="about-art-bottom">LUNA CONSULTING <ArrowUpRight size={17} /></span><div className="about-floating-label glass-badge"><span className="status-dot" /> Una mirada integral. Una dirección definida.</div></div>
+          <div className="about-copy reveal"><SectionLabel light>LA FIRMA</SectionLabel><h2>Perspectiva estratégica.<br /><span>Compromiso con la acción.</span></h2><p>La luna representa nuestra forma de abordar cada proyecto: observar el contexto, identificar lo que no es evidente y construir una perspectiva completa antes de tomar decisiones.</p><p>En Luna Consulting conectamos diagnóstico, experiencia del cliente, operación, desarrollo comercial y presencia digital. Nuestro trabajo convierte los hallazgos en recomendaciones, capacitación y un plan de mejora que puedas usar para decidir.</p><div className="about-values"><span><span className="value-dot" /> Análisis riguroso</span><span><span className="value-dot" /> Trabajo cercano</span><span><span className="value-dot" /> Acciones medibles</span></div><button className="text-button" onClick={openContact}>Conversemos sobre tu negocio <ArrowUpRight size={20} /></button></div>
         </div>
       </section>
 
-      <section className="contact-section" id="contacto"><div className="contact-orbit" aria-hidden="true" /><div className="page-width contact-inner reveal"><SectionLabel>EL SIGUIENTE PASO ES TUYO</SectionLabel><h2>El siguiente paso de tu negocio<br />empieza con un <span>diagnóstico.</span></h2><p>Cuéntanos qué quieres mejorar en tu operación,<br />servicio, ventas o presencia digital.</p><button className="button button-lime" onClick={openContact}>Preparemos el punto de partida <ArrowUpRight size={20} /></button><span className="contact-note">Una propuesta personalizada. Acciones con dirección.</span></div></section>
+      <section className="contact-section" id="contacto"><div className="contact-orbit" aria-hidden="true" /><div className="page-width contact-inner reveal"><SectionLabel>INICIEMOS EL ANÁLISIS</SectionLabel><h2>Definamos la dirección<br /><span>de tu negocio.</span></h2><p>Hablemos de tus prioridades en operación,<br />servicio, ventas y presencia digital.</p><button className="button button-primary" onClick={openContact}>Iniciar una conversación <ArrowUpRight size={20} /></button><span className="contact-note">Alcance definido. Estrategia personalizada.</span></div></section>
     </main>
 
-    <footer className="site-footer"><div className="page-width"><div className="footer-top"><Logo footer /><p>Consultoría empresarial integral.<br />Información para avanzar.</p><a href="#inicio">Volver al inicio <ArrowUpRight size={17} /></a></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Luna Consulting</span><span>Diagnóstico · Estrategia · Implementación</span><span>Hecho para mirar más allá <span className="footer-star">✳</span></span></div></div></footer>
+    <footer className="site-footer"><div className="page-width"><div className="footer-top"><Logo footer /><p>Consultoría empresarial integral.<br />Información para avanzar.</p><a href="#inicio">Volver al inicio <ArrowUpRight size={17} /></a></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Luna Consulting</span><span>Diagnóstico · Estrategia · Implementación</span><span>Hecho para mirar más allá <span className="footer-star" aria-hidden="true"><Asterisk size={13} strokeWidth={1.2} /></span></span></div></div></footer>
     <ContactDialog open={contactOpen} onClose={() => setContactOpen(false)} />
   </>;
 }

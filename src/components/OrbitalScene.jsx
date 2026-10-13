@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
+import moonAlbedoUrl from '../assets/moon-albedo.jpg?inline';
+
+// Three.js example texture, distributed with the repository's MIT license.
+// Pinned source: mrdoob/three.js@22bd108ab13cb0c0d944eae510442484fe4fac14,
+// examples/textures/planets/moon_1024.jpg. See THIRD_PARTY_NOTICES.md.
 
 export default function OrbitalScene() {
   const host = useRef(null);
@@ -7,110 +12,209 @@ export default function OrbitalScene() {
 
   useEffect(() => {
     const node = host.current;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let reducedMotion = motionPreference.matches;
+    let disposed = false;
+    let textureReady = false;
+    let visible = true;
+    let frame = null;
+    let previousTime = 0;
+    let elapsed = 0;
+    let bumpTexture;
+    let targetX = 0;
+    let targetY = 0;
+    let pointerX = 0;
+    let pointerY = 0;
     let renderer;
+    setAvailable(true);
     try {
       renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'low-power' });
     } catch {
       setAvailable(false);
       return;
     }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.7));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
     renderer.setClearColor(0x000000, 0);
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.35;
+    renderer.toneMappingExposure = 1.18;
+    renderer.domElement.setAttribute('aria-hidden', 'true');
+    renderer.domElement.style.width = '100%';
+    renderer.domElement.style.height = '100%';
     node.appendChild(renderer.domElement);
+
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(37, 1, 0.1, 100);
-    camera.position.set(0, 0, 9);
-    scene.add(new THREE.AmbientLight(0xccded4, 2));
-    const lights = [[0xf5ffe7, 28, -3, 4, 5], [0xb8e382, 22, 4, 1, 3], [0xe5ede7, 14, 0, -3, 3]];
-    lights.forEach(([color, intensity, x, y, z]) => {
-      const light = new THREE.PointLight(color, intensity, 20, 2);
-      light.position.set(x, y, z);
-      scene.add(light);
-    });
-    const sculpture = new THREE.Group();
-    sculpture.rotation.set(0.28, -0.5, -0.38);
-    scene.add(sculpture);
-    const metals = [
-      new THREE.MeshStandardMaterial({ color: 0xd1e2be, metalness: 0.65, roughness: 0.2 }),
-      new THREE.MeshStandardMaterial({ color: 0x9db598, metalness: 0.75, roughness: 0.24 }),
-      new THREE.MeshStandardMaterial({ color: 0xc9e1bc, metalness: 0.5, roughness: 0.25 }),
-    ];
-    const rings = [];
-    for (let i = 0; i < 3; i++) {
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(1.72 - i * 0.05, 0.12 + i * 0.01, 32, 120), metals[i]);
-      ring.rotation.set(i === 0 ? 0.3 : i === 1 ? 1.12 : -0.92, i === 0 ? 0.17 : i === 1 ? 0.65 : -0.73, i * 0.52);
-      rings.push(ring);
-      sculpture.add(ring);
-    }
-    const sphere = new THREE.Mesh(new THREE.SphereGeometry(0.89, 64, 48), new THREE.MeshStandardMaterial({ color: 0xd6e9a7, metalness: 0.28, roughness: 0.33 }));
-    sculpture.add(sphere);
-    const satellite = new THREE.Mesh(new THREE.SphereGeometry(0.105, 24, 16), metals[0]);
-    satellite.position.set(-1.65, 1.3, 0.25);
-    sculpture.add(satellite);
-    const orbit = new THREE.Mesh(new THREE.TorusGeometry(2.35, 0.006, 8, 150), new THREE.MeshBasicMaterial({ color: 0xa3b7a1, transparent: true, opacity: 0.26 }));
-    orbit.rotation.set(1.0, 0.1, 0.25);
-    sculpture.add(orbit);
-    let pointer = { x: 0, y: 0 };
-    let frame;
-    let visible = true;
-    const onPointer = (event) => {
-      const rect = node.getBoundingClientRect();
-      pointer = { x: ((event.clientX - rect.left) / rect.width - 0.5) * 0.26, y: ((event.clientY - rect.top) / rect.height - 0.5) * 0.18 };
-    };
-    node.addEventListener('pointermove', onPointer);
-    const clock = new THREE.Clock();
-    const render = () => {
-      if (!visible) return;
-      const time = clock.getElapsedTime();
-      if (!reduced) {
-        sculpture.rotation.y += (pointer.x - 0.5 - sculpture.rotation.y) * 0.025;
-        sculpture.rotation.x += (pointer.y + 0.28 - sculpture.rotation.x) * 0.025;
-        sculpture.rotation.z = -0.38 + Math.sin(time * 0.2) * 0.055;
-        sculpture.position.y = Math.sin(time * 0.6) * 0.055;
-        rings[1].rotation.z = 0.52 + time * 0.07;
-        rings[2].rotation.z = 1.04 - time * 0.045;
+    const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
+    camera.position.set(0, 0, 7.1);
+
+    // A single, neutral key light creates the lunar terminator. A small amount
+    // of fill keeps the dark limb legible without flattening the shadows.
+    scene.add(new THREE.AmbientLight(0xffffff, 0.045));
+    const sunlight = new THREE.DirectionalLight(0xffffff, 3.1);
+    sunlight.position.set(-3.7, 1.4, 3.4);
+    scene.add(sunlight);
+    const rim = new THREE.DirectionalLight(0xffffff, 0.11);
+    rim.position.set(3, 0.8, -4);
+    scene.add(rim);
+
+    const geometry = new THREE.SphereGeometry(1.72, 128, 96);
+    const material = new THREE.MeshStandardMaterial({ color: 0xe8e8e8, roughness: 1, metalness: 0 });
+    const moon = new THREE.Mesh(geometry, material);
+    moon.rotation.set(-0.06, -Math.PI / 2, 0.08);
+    const tilt = new THREE.Group();
+    tilt.add(moon);
+    scene.add(tilt);
+
+    const albedoTexture = new THREE.TextureLoader().load(moonAlbedoUrl, (texture) => {
+      if (disposed) {
+        texture.dispose();
+        return;
       }
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.anisotropy = Math.min(renderer.capabilities.getMaxAnisotropy(), 4);
+      texture.needsUpdate = true;
+      material.map = texture;
+      // Albedo supplies subtle visual relief; it is not a lunar elevation map.
+      bumpTexture = texture.clone();
+      bumpTexture.colorSpace = THREE.NoColorSpace;
+      bumpTexture.needsUpdate = true;
+      material.bumpMap = bumpTexture;
+      material.bumpScale = 0.022;
+      material.needsUpdate = true;
+      textureReady = true;
+      node.dataset.moonReady = 'true';
+      renderStill();
+      startAnimation();
+    }, undefined, () => {
+      if (disposed) return;
+      setAvailable(false);
+      cleanup();
+    });
+
+    function canRender() {
+      return !disposed && textureReady && visible && !document.hidden;
+    }
+
+    function renderStill() {
+      if (canRender()) renderer.render(scene, camera);
+    }
+
+    function stopAnimation() {
+      if (frame !== null) cancelAnimationFrame(frame);
+      frame = null;
+      previousTime = 0;
+    }
+
+    function animate(time) {
+      frame = null;
+      if (!canRender() || reducedMotion) return;
+      const delta = Math.min((time - previousTime) / 1000, 0.05);
+      previousTime = time;
+      elapsed += delta;
+      const easing = 1 - Math.exp(-delta * 2.8);
+      pointerX += (targetX - pointerX) * easing;
+      pointerY += (targetY - pointerY) * easing;
+      tilt.rotation.set(pointerY, pointerX, 0);
+      // Approximately one turn every 17 minutes: motion stays unobtrusive.
+      moon.rotation.y = -Math.PI / 2 + elapsed * 0.006;
       renderer.render(scene, camera);
-      if (!reduced) frame = requestAnimationFrame(render);
-    };
-    const resize = () => {
+      frame = requestAnimationFrame(animate);
+    }
+
+    function startAnimation() {
+      if (!canRender() || reducedMotion || frame !== null) return;
+      previousTime = performance.now();
+      frame = requestAnimationFrame(animate);
+    }
+
+    function resize() {
+      if (disposed) return;
       const { width, height } = node.getBoundingClientRect();
       if (!width || !height) return;
-      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
+      renderer.setSize(width, height, false);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
-      if (reduced) renderer.render(scene, camera);
-    };
+      renderStill();
+    }
+
+    function onPointer(event) {
+      if (reducedMotion || event.pointerType === 'touch') return;
+      const rect = node.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+      targetX = ((event.clientX - rect.left) / rect.width - 0.5) * 0.07;
+      targetY = ((event.clientY - rect.top) / rect.height - 0.5) * 0.04;
+    }
+
+    function onPointerLeave() {
+      targetX = 0;
+      targetY = 0;
+    }
+
+    function onVisibilityChange() {
+      if (document.hidden) stopAnimation();
+      else {
+        renderStill();
+        startAnimation();
+      }
+    }
+
+    function onMotionPreference(event) {
+      reducedMotion = event.matches;
+      stopAnimation();
+      if (!reducedMotion) startAnimation();
+      else renderStill();
+    }
+
+    function onContextLost(event) {
+      event.preventDefault();
+      if (disposed) return;
+      setAvailable(false);
+      cleanup();
+    }
+
     const sizeObserver = new ResizeObserver(resize);
     sizeObserver.observe(node);
     const visibilityObserver = new IntersectionObserver(([entry]) => {
-      const wasVisible = visible;
       visible = entry.isIntersecting;
-      if (visible && !wasVisible) render();
-      if (!visible) cancelAnimationFrame(frame);
+      if (!visible) stopAnimation();
+      else {
+        renderStill();
+        startAnimation();
+      }
     });
     visibilityObserver.observe(node);
+    node.addEventListener('pointermove', onPointer, { passive: true });
+    node.addEventListener('pointerleave', onPointerLeave);
+    document.addEventListener('visibilitychange', onVisibilityChange);
+    motionPreference.addEventListener('change', onMotionPreference);
+    renderer.domElement.addEventListener('webglcontextlost', onContextLost);
     resize();
-    render();
-    return () => {
-      cancelAnimationFrame(frame);
+
+    function cleanup() {
+      if (disposed) return;
+      disposed = true;
+      stopAnimation();
       sizeObserver.disconnect();
       visibilityObserver.disconnect();
       node.removeEventListener('pointermove', onPointer);
-      scene.traverse((object) => {
-        object.geometry?.dispose();
-        if (object.material) object.material.dispose();
-      });
+      node.removeEventListener('pointerleave', onPointerLeave);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      motionPreference.removeEventListener('change', onMotionPreference);
+      renderer.domElement.removeEventListener('webglcontextlost', onContextLost);
+      delete node.dataset.moonReady;
+      geometry.dispose();
+      material.dispose();
+      albedoTexture.dispose();
+      bumpTexture?.dispose();
       renderer.dispose();
       renderer.domElement.remove();
-    };
+    }
+
+    return cleanup;
   }, []);
 
-  return <div className="orbital-scene" ref={host} role="img" aria-label="Escultura 3D animada: esfera lunar rodeada de tres órbitas entrelazadas">
-    {!available && <div className="orbital-fallback"><div /><span /><i /></div>}
+  return <div className="orbital-scene" ref={host} role="img" aria-label="Luna en 3D con superficie de cráteres e iluminación lateral">
+    {!available && <div className="orbital-fallback" />}
   </div>;
 }

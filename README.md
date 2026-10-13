@@ -1,6 +1,6 @@
 # Luna Consulting
 
-Web de consultoría empresarial integral en español con identidad visual propia, glassmorphism, escena 3D interactiva y diseño adaptable.
+Web de consultoría empresarial integral en español con identidad visual propia, diseño ejecutivo en blanco y negro, glassmorphism, luna 3D interactiva y diseño adaptable.
 
 ## Oferta
 
@@ -32,7 +32,7 @@ npm run preview
 ## Incluye
 
 - Logo lunar propio en `public/luna-symbol.png` y favicon SVG.
-- Escultura orbital 3D hecha con Three.js, con respuesta al cursor, pausa fuera de pantalla y alternativa visual cuando WebGL no está disponible.
+- Luna 3D con textura de cráteres, iluminación lateral y rotación lenta, hecha con Three.js. Responde sutilmente al cursor, pausa fuera de pantalla y cuando la pestaña está oculta, respeta cambios de movimiento reducido y tiene una alternativa visual cuando WebGL no está disponible.
 - Seis servicios desplegables, cinco etapas de metodología con pestañas, entregables y navegación móvil.
 - Modal para preparar y descargar un briefing local en TXT. **No envía datos, mensajes ni correos.** Para recibir consultas se necesita conectar un servicio de envío y proporcionar el destino real.
 - Fuentes alojadas en el proyecto, sin solicitudes a Google Fonts.
@@ -40,7 +40,7 @@ npm run preview
 
 ## Personalización
 
-El contenido está en `src/App.jsx`; la dirección visual está en `src/styles.css`; la escultura en `src/components/OrbitalScene.jsx`; el briefing en `src/components/ContactDialog.jsx`.
+El contenido está en `src/App.jsx`; la estructura visual está en `src/styles.css` y el diseño ejecutivo en `src/executive.css`; la luna en `src/components/OrbitalScene.jsx`; el briefing en `src/components/ContactDialog.jsx`. Los créditos de la textura están en `THIRD_PARTY_NOTICES.md`.
 
 La web no incluye clientes, testimonios ni cifras de resultados ficticios. Los textos de servicios son una propuesta editable para la marca.
 
