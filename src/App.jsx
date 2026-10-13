@@ -102,7 +102,7 @@ export default function App() {
         <div className="hero-main page-width">
           <div className="hero-copy">
             <p className="hero-eyebrow"><span className="status-dot" /> CONSULTORÍA EMPRESARIAL INTEGRAL</p>
-            <h1><span className="hero-heading-line">Visión estratégica.</span><span className="hero-heading-line executive-text">Acción medible.</span></h1>
+            <h1><span className="hero-heading-line">Consultoría</span>{' '}<span className="hero-heading-line">Empresarial</span>{' '}<span className="hero-heading-line executive-text">a tu alcance</span></h1>
             <p className="hero-description">Diagnóstico empresarial y estrategias basadas en información<br className="desktop-break" /> para fortalecer la operación, la experiencia del cliente<br className="desktop-break" /> y el desempeño comercial de tu negocio.</p>
             <div className="hero-buttons">
               <button className="button button-primary" onClick={openContact}>Analicemos tu negocio <ArrowUpRight size={20} /></button>
