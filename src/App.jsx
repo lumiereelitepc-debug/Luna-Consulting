@@ -131,7 +131,7 @@ export default function App() {
         <div className="page-width">
           <div className="section-heading reveal"><div><SectionLabel light>QUÉ HACEMOS</SectionLabel><h2>Entendemos tu negocio.<br /><span>Conectamos sus oportunidades.</span></h2></div><p>Una mirada integral a la estrategia, los clientes,<br />la operación y los canales comerciales y digitales.<br />Cada propuesta parte de lo que tu negocio necesita.</p></div>
           <div className="service-cards">
-            {services.map((service, index) => { const Icon = service.icon; const expanded = expandedService === index; return <article className={`service-card reveal ${expanded ? 'service-expanded' : ''}`} key={service.number} style={{ '--reveal-delay': `${index * 100}ms` }}>
+            {services.map((service, index) => { const Icon = service.icon; const expanded = expandedService === index; return <article className="service-card reveal" data-expanded={expanded} key={service.number} style={{ '--reveal-delay': `${index % 3 * 100}ms` }}>
               <div className="service-top"><div className="service-icon"><Icon size={29} strokeWidth={1.2} /></div><span className="service-number">/ {service.number}</span></div>
               <h3>{service.title}</h3><p className="service-description">{service.description}</p>
               <div className="service-tags">{service.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
