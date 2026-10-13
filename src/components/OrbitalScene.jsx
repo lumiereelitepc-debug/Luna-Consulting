@@ -47,10 +47,9 @@ export default function OrbitalScene() {
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
     camera.position.set(0, 0, 7.1);
 
-    // Backlighting from the left forms a waning crescent. Minimal earthshine
-    // leaves the unlit hemisphere dark without adding a second bright limb.
-    scene.add(new THREE.AmbientLight(0xffffff, 0.0015));
-    const sunlight = new THREE.DirectionalLight(0xffffff, 3.1);
+    // Backlighting from the left forms a waning crescent. The unlit hemisphere
+    // merges with the black backdrop, leaving the illuminated arc in focus.
+    const sunlight = new THREE.DirectionalLight(0xffffff, 4.8);
     sunlight.position.set(-5.4, 0.45, -4.6);
     scene.add(sunlight);
 
