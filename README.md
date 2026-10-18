@@ -1,6 +1,6 @@
 # Luna Consulting
 
-Web de consultoría empresarial integral en español con identidad visual propia, diseño ejecutivo en blanco y negro, glassmorphism, luna 3D interactiva y diseño adaptable.
+Web de consultoría empresarial integral en español con identidad visual propia, presentación institucional en azul marino, blanco y tonos claros, luna menguante 3D interactiva y diseño adaptable.
 
 ## Oferta
 
@@ -40,7 +40,7 @@ npm run preview
 
 ## Personalización
 
-El contenido está en `src/App.jsx`; la estructura visual está en `src/styles.css` y el diseño ejecutivo en `src/executive.css`; la luna en `src/components/OrbitalScene.jsx`; el briefing en `src/components/ContactDialog.jsx`. Los créditos de la textura están en `THIRD_PARTY_NOTICES.md`.
+El contenido está en `src/App.jsx`; la estructura visual está en `src/styles.css` y la identidad profesional clara en `src/executive.css`; la luna en `src/components/OrbitalScene.jsx`; el briefing en `src/components/ContactDialog.jsx` y su estilo claro en `ContactDialog.css`. La escena usa composición de pantalla sobre su panel azul para conservar el arco menguante. Los créditos de la textura están en `THIRD_PARTY_NOTICES.md`.
 
 La web no incluye clientes, testimonios ni cifras de resultados ficticios. Los textos de servicios son una propuesta editable para la marca.
 

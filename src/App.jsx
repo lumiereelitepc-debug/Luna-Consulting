@@ -6,11 +6,11 @@ const OrbitalScene = lazy(() => import('./components/OrbitalScene.jsx'));
 
 const services = [
   { number: '01', icon: Compass, title: 'Diagnóstico estratégico', description: 'Una visión integral de tu negocio para reconocer fortalezas, retos y prioridades.', tags: ['Diagnóstico integral', 'FODA', 'Competencia'], detail: 'Evaluamos operación, servicio, ventas, comunicación y presencia digital. Integramos un análisis FODA y un estudio de negocios comparables para entender tu posicionamiento y detectar oportunidades con información.' },
-  { number: '02', icon: Users, title: 'Clientes & experiencia', description: 'Entendemos qué valora tu cliente y dónde puede mejorar su experiencia.', tags: ['Encuestas', 'Reseñas', 'Customer Journey'], detail: 'Diseñamos encuestas de percepción, analizamos reseñas y mapeamos el recorrido del cliente, desde el primer contacto hasta la recompra. Evaluamos atención y puntos críticos; cuando es viable, complementamos con una visita de cliente incógnito.' },
-  { number: '03', icon: Layers3, title: 'Operación & capacitación', description: 'Procesos más claros y un equipo preparado para brindar un servicio consistente.', tags: ['Procesos', 'Protocolos de atención', 'Capacitación'], detail: 'Revisamos flujos de trabajo, tiempos de servicio, coordinación y manejo de errores. Proponemos mejoras y oportunidades de estandarización. Adaptamos la capacitación a los hallazgos: atención, comunicación, trabajo en equipo, quejas y venta sugerida.' },
+  { number: '02', icon: Users, title: 'Clientes y experiencia', description: 'Entendemos qué valora tu cliente y dónde puede mejorar su experiencia.', tags: ['Encuestas', 'Reseñas', 'Customer Journey'], detail: 'Diseñamos encuestas de percepción, analizamos reseñas y mapeamos el recorrido del cliente, desde el primer contacto hasta la recompra. Evaluamos atención y puntos críticos; cuando es viable, complementamos con una visita de cliente incógnito.' },
+  { number: '03', icon: Layers3, title: 'Operación y capacitación', description: 'Procesos más claros y un equipo preparado para brindar un servicio consistente.', tags: ['Procesos', 'Protocolos de atención', 'Capacitación'], detail: 'Revisamos flujos de trabajo, tiempos de servicio, coordinación y manejo de errores. Proponemos mejoras y oportunidades de estandarización. Adaptamos la capacitación a los hallazgos: atención, comunicación, trabajo en equipo, quejas y venta sugerida.' },
   { number: '04', icon: ChartNoAxesCombined, title: 'Desarrollo comercial', description: 'Estrategias de venta y fidelización conectadas con las oportunidades de tu negocio.', tags: ['Venta sugerida', 'Promociones', 'Fidelización'], detail: 'Diseñamos propuestas de venta sugerida y cruzada, promociones, combos y acciones para la recompra y recomendación. La selección de iniciativas parte del diagnóstico, las características de tu oferta y las necesidades de tus clientes.' },
-  { number: '05', icon: Monitor, title: 'Marketing & presencia digital', description: 'Una comunicación coherente en redes, buscadores y puntos de contacto digitales.', tags: ['Contenidos', 'Reputación digital', 'Propuesta web'], detail: 'Auditamos perfiles, información y reputación digital. Definimos pilares de contenido, calendario editorial y recomendaciones para redes sociales y Google. Proponemos la estructura y los contenidos de tu página web como punto central de información y contacto.' },
-  { number: '06', icon: Orbit, title: 'Plan de mejora & seguimiento', description: 'De los hallazgos a acciones priorizadas, acompañamiento e indicadores claros.', tags: ['Plan de acción', 'Acompañamiento', 'KPIs'], detail: 'Convertimos el diagnóstico en un plan con acciones, objetivos, prioridades, plazos, recursos e indicadores. Presentamos los hallazgos contigo, acordamos el alcance del acompañamiento y definimos cómo seguir el desempeño comercial, de servicio y digital.' },
+  { number: '05', icon: Monitor, title: 'Marketing y presencia digital', description: 'Una comunicación coherente en redes, buscadores y puntos de contacto digitales.', tags: ['Contenidos', 'Reputación digital', 'Propuesta web'], detail: 'Auditamos perfiles, información y reputación digital. Definimos pilares de contenido, calendario editorial y recomendaciones para redes sociales y Google. Proponemos la estructura y los contenidos de tu página web como punto central de información y contacto.' },
+  { number: '06', icon: Orbit, title: 'Plan de mejora y seguimiento', description: 'De los hallazgos a acciones priorizadas, acompañamiento e indicadores claros.', tags: ['Plan de acción', 'Acompañamiento', 'KPIs'], detail: 'Convertimos el diagnóstico en un plan con acciones, objetivos, prioridades, plazos, recursos e indicadores. Presentamos los hallazgos contigo, acordamos el alcance del acompañamiento y definimos cómo seguir el desempeño comercial, de servicio y digital.' },
 ];
 
 const steps = [
@@ -105,23 +105,22 @@ export default function App() {
             <h1><span className="hero-heading-line">Consultoría</span>{' '}<span className="hero-heading-line">Empresarial</span>{' '}<span className="hero-heading-line executive-text">a tu alcance</span></h1>
             <p className="hero-description">Diagnóstico empresarial y estrategias basadas en información<br className="desktop-break" /> para fortalecer la operación, la experiencia del cliente<br className="desktop-break" /> y el desempeño comercial de tu negocio.</p>
             <div className="hero-buttons">
-              <button className="button button-primary" onClick={openContact}>Analicemos tu negocio <ArrowUpRight size={20} /></button>
-              <a className="hero-secondary" href="#servicios">Nuestros servicios <ArrowDown size={16} /></a>
+              <button className="button button-primary" onClick={openContact}>Preparar diagnóstico <ArrowUpRight size={20} /></button>
+              <a className="hero-secondary" href="#servicios">Conocer los servicios <ArrowDown size={16} /></a>
             </div>
-            <p className="hero-note"><span className="small-cross">+</span> Información rigurosa. Prioridades definidas. Seguimiento.</p>
+            <p className="hero-note"><Check size={14} /> Alcance y propuesta definidos para tu negocio.</p>
           </div>
           <div className="hero-visual">
-            <span className="visual-coordinate coordinate-top">PERSPECTIVA / ANÁLISIS / DIRECCIÓN</span>
-            <span className="visual-cross cross-top" aria-hidden="true">+</span>
+            <span className="visual-coordinate coordinate-top">LUNA CONSULTING / PERSPECTIVA INTEGRAL</span>
             <Suspense fallback={<div className="orbital-scene" aria-hidden="true"><div className="orbital-fallback" /></div>}><OrbitalScene /></Suspense>
-            <div className="glass-badge badge-perspective"><div className="badge-icon"><Moon size={20} strokeWidth={1.3} /></div><div><span>DECISIONES CON FUNDAMENTO</span><strong>Investigación · Estrategia · Medición</strong></div><span className="badge-live" /></div>
+            <div className="glass-badge badge-perspective"><div className="badge-icon"><Moon size={22} strokeWidth={1.4} /></div><div><span>DECISIONES CON FUNDAMENTO</span><strong>Una perspectiva para avanzar.</strong></div></div>
             <div className="glass-badge badge-progress"><span className="progress-label">VISIÓN INTEGRAL</span><div className="analysis-dimensions"><span>Operación</span><span>Clientes</span><span>Comercial</span><span>Digital</span></div><span className="progress-arrow"><MoveUpRight size={19} /></span></div>
-            <span className="visual-coordinate coordinate-bottom"><span className="tiny-dot" /> LUNA CONSULTING / VISIÓN EMPRESARIAL</span>
+            <span className="visual-coordinate coordinate-bottom"><span className="tiny-dot" /> INVESTIGACIÓN · ESTRATEGIA · MEDICIÓN</span>
           </div>
         </div>
         <div className="hero-bottom page-width">
-          <p>Consultoría empresarial.<br /><span>Una perspectiva integral.</span></p>
-          <div className="hero-disciplines"><span><i>01</i> Diagnóstico</span><span><i>02</i> Estrategia</span><span><i>03</i> Implementación</span></div>
+          <p>Un proceso claro.<br /><span>De principio a fin.</span></p>
+          <div className="hero-disciplines"><span><i>01</i><span>Diagnóstico<small>Comprender el negocio</small></span></span><span><i>02</i><span>Estrategia<small>Definir las prioridades</small></span></span><span><i>03</i><span>Seguimiento<small>Medir para avanzar</small></span></span></div>
           <a className="scroll-link" href="#servicios" aria-label="Desplazarse a nuestros servicios"><ArrowDown size={20} /></a>
         </div>
       </section>
@@ -135,7 +134,7 @@ export default function App() {
               <h3>{service.title}</h3><p className="service-description">{service.description}</p>
               <div className="service-tags">{service.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
               <div className="service-detail" id={`service-detail-${index}`} hidden={!expanded}><p>{service.detail}</p><button onClick={openContact}>Hablemos de tu reto <ArrowUpRight size={16} /></button></div>
-              <button className="service-more" aria-expanded={expanded} aria-controls={`service-detail-${index}`} onClick={() => setExpandedService(expanded ? null : index)}><span>{expanded ? 'Ver menos' : 'Descubre el enfoque'}</span><span className="service-more-icon">{expanded ? <Minus size={19} /> : <ArrowUpRight size={19} />}</span></button>
+              <button className="service-more" aria-expanded={expanded} aria-controls={`service-detail-${index}`} onClick={() => setExpandedService(expanded ? null : index)}><span>{expanded ? 'Cerrar detalle' : 'Ver alcance del servicio'}</span><span className="service-more-icon">{expanded ? <Minus size={19} /> : <ArrowUpRight size={19} />}</span></button>
             </article>; })}
           </div>
           <div className="service-footnote reveal"><span className="footnote-cross" aria-hidden="true"><Asterisk size={26} strokeWidth={1.2} /></span><p>Un diagnóstico, una estrategia y un camino para avanzar.<br /><strong>Alcance, tiempos e inversión definidos contigo.</strong></p><a href="#metodo">Conoce nuestra forma de trabajar <ArrowRight size={18} /></a></div>
