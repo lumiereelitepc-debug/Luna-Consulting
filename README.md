@@ -32,7 +32,7 @@ npm run preview
 ## Incluye
 
 - Logo lunar propio en `public/luna-symbol.png` y favicon SVG.
-- Luna menguante 3D con cráteres, levitación y paralaje, hecha con Three.js. El arco iluminado a la izquierda flota directamente sobre el fondo claro de la portada, sin panel azul, estrellas ni tarjetas superpuestas.
+- Luna menguante escultórica en plata satinada, modelada con geometría 3D suave, iluminación de estudio, levitación y paralaje. Flota sobre el fondo claro de la portada, sin panel azul ni tarjetas superpuestas. La silueta y el volumen se construyen con geometría; no se recortan a partir de una fotografía.
 - Escultura cristalina 3D en la sección de la firma, con núcleo facetado, satélites y pulsos luminosos. Se carga al acercarse a la sección. Ambas escenas limitan el renderizado a 30 fps y DPR 1,5, pausan fuera de pantalla y al ocultar la pestaña, respetan los cambios de movimiento reducido y tienen alternativas visuales sin WebGL.
 - Tarjetas con perspectiva e iluminación al mover el cursor y capas de cristal en la metodología. Los efectos se desactivan con movimiento reducido; la perspectiva se limita a dispositivos con puntero preciso.
 - Seis servicios desplegables, cinco etapas de metodología con pestañas, entregables y navegación móvil.
@@ -42,7 +42,7 @@ npm run preview
 
 ## Personalización
 
-El contenido está en `src/App.jsx`; la estructura visual está en `src/styles.css` y la identidad profesional clara en `src/executive.css`. Las escenas están en `src/components/OrbitalScene.jsx` y `StrategyScene.jsx`; los efectos de perspectiva en `src/depth.css` y `src/components/useDepthEffects.js`; el briefing en `src/components/ContactDialog.jsx` y su estilo claro en `ContactDialog.css`. La luna usa transparencia en la zona sin iluminación para conservar el arco menguante y sus tonos neutros sobre el fondo claro. La portada no aplica paneles de color ni capas de cristal sobre la luna. Los créditos de la textura están en `THIRD_PARTY_NOTICES.md`.
+El contenido está en `src/App.jsx`; la estructura visual está en `src/styles.css` y la identidad profesional clara en `src/executive.css`. Las escenas están en `src/components/OrbitalScene.jsx` y `StrategyScene.jsx`; la geometría y los reflejos de la luna se definen en `src/components/lunarSculpture.js`; los efectos de perspectiva en `src/depth.css` y `src/components/useDepthEffects.js`; el briefing en `src/components/ContactDialog.jsx` y su estilo claro en `ContactDialog.css`. La luna tiene una superficie curva continua, materiales de plata satinada y reflejos de estudio generados en el navegador. La alternativa sin WebGL usa una silueta SVG con el mismo acabado. La portada no aplica paneles de color ni capas de cristal sobre la luna. La textura lunar utilizada en versiones anteriores permanece acreditada en `THIRD_PARTY_NOTICES.md`.
 
 La web no incluye clientes, testimonios ni cifras de resultados ficticios. Los textos de servicios son una propuesta editable para la marca.
 

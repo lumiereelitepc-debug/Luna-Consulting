@@ -151,10 +151,6 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
 .about-layout { gap: 75px; grid-template-columns: .95fr 1.05fr; }
 .about-art { background: radial-gradient(ellipse at 25% 35%, #2b5570, #163956 70%); border: 1px solid #244c68; border-radius: 12px; aspect-ratio: 1.14; }
 .about-art-grid { opacity: .14; }
-.about-moon { transform: translate(-50%, -50%); background: #aaaaaa url('./assets/moon-albedo.jpg') center / 200% 100%; box-shadow: none; mix-blend-mode: screen; }
-.about-moon::before { border: none; }
-.about-moon::after { display: none; }
-.about-moon, .orbital-fallback { -webkit-mask-image: radial-gradient(ellipse 50% 53% at 70% 50%, transparent 98%, #000000 99%); mask-image: radial-gradient(ellipse 50% 53% at 70% 50%, transparent 98%, #000000 99%); }
 .about-art-label { color: #d9e7f1; font-size: 8px; letter-spacing: 1.5px; top: 26px; left: 27px; }
 .about-art-bottom { color: #d0e2ef; font-size: 8px; bottom: 24px; left: 27px; right: 27px; }
 .about-floating-label { color: #355c77; background: #ffffffed; border-radius: 7px; font-size: 10px; padding: 15px 17px; bottom: 62px; }
@@ -182,8 +178,8 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
 .brand-footer .brand-symbol { width: 34px; height: 36px; }
 .brand-footer .brand-wordmark { font-size: 31px; }
 .brand-footer .brand-subtitle { font-size: 6px; }
-.orbital-fallback { inset: auto; width: min(85%, 420px); aspect-ratio: 1; left: 70%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; background: #aaaaaa url('./assets/moon-albedo.jpg') center / 200% 100%; box-shadow: inset -30px 0 55px #000000a0; }
-.orbital-fallback > * { display: none; }
+.orbital-fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: grid; place-items: center; transform: none; border-radius: 0; background: none; box-shadow: none; -webkit-mask-image: none; mask-image: none; }
+.orbital-fallback > svg { display: block; width: 100%; height: 100%; }
 
 @media (min-width: 1500px) {
   .hero h1 { font-size: 71px; }
