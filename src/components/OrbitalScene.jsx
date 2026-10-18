@@ -48,14 +48,36 @@ export default function OrbitalScene() {
     const camera = new THREE.PerspectiveCamera(34, 1, 0.1, 50);
     camera.position.set(0, 0, 7.1);
 
-    // Backlighting from the left forms a waning crescent. Screen blending on the
-    // canvas lets its unlit hemisphere merge with the navy panel behind it.
-    const sunlight = new THREE.DirectionalLight(0xffffff, 4.8);
+    // Backlighting from the left forms a waning crescent. Its shadow is made
+    // transparent in the lunar material, so the lit texture keeps neutral tones
+    // without requiring a CSS blend mode or showing a dark circular disk.
+    const sunlight = new THREE.DirectionalLight(0xffffff, 13);
     sunlight.position.set(-5.4, 0.45, -4.6);
     scene.add(sunlight);
 
     const geometry = new THREE.SphereGeometry(1.72, 128, 96);
-    const material = new THREE.MeshStandardMaterial({ color: 0xe8e8e8, roughness: 1, metalness: 0 });
+    const material = new THREE.MeshStandardMaterial({
+      color: 0xe8e8e8,
+      roughness: 1,
+      metalness: 0,
+      transparent: true,
+      depthWrite: false,
+    });
+    material.onBeforeCompile = (shader) => {
+      shader.fragmentShader = shader.fragmentShader.replace(
+        '#include <opaque_fragment>',
+        `
+          // Keep physically lit albedo and crater relief unchanged. Only the
+          // unlit hemisphere and its narrow penumbra become transparent.
+          float lunarLight = dot(reflectedLight.directDiffuse, vec3(0.2126, 0.7152, 0.0722));
+          float lunarAlpha = smoothstep(0.008, 0.065, lunarLight);
+          if (lunarAlpha < 0.001) discard;
+          diffuseColor.a *= lunarAlpha;
+          #include <opaque_fragment>
+        `,
+      );
+    };
+    material.customProgramCacheKey = () => 'luna-neutral-crescent-v1';
     const moon = new THREE.Mesh(geometry, material);
     moon.rotation.set(-0.06, -Math.PI / 2, 0.08);
     const tilt = new THREE.Group();
