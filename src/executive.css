@@ -39,7 +39,7 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
 .header-contact { min-height: 42px; padding: 11px 18px; color: #ffffff; background: #163451; border: 1px solid #163451; font-size: 11px; }
 .header-contact:hover { color: #ffffff; border-color: #244d6c; background: #244d6c; }
 
-/* A bright editorial introduction, with the lunar identity contained in blue. */
+/* The crescent floats directly on the light introduction, without a panel. */
 .hero { min-height: initial; padding-top: 94px; background: linear-gradient(115deg, #fafcfd, #f3f7fa); color: #163451; }
 .hero-grid-texture, .hero-glow { display: none; }
 .hero-main { min-height: 648px; grid-template-columns: 1.05fr 1fr; column-gap: 88px; padding-top: 54px; padding-bottom: 58px; }
@@ -56,24 +56,10 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
 .hero-secondary:hover { color: #163451; }
 .hero-note { display: flex; align-items: center; gap: 8px; font-size: 11px; color: #526d83; margin-top: 24px; letter-spacing: 0; }
 .hero-note svg { color: #467a94; }
-.hero-visual { position: relative; width: 100%; height: 480px; margin: 0; background: radial-gradient(ellipse at 24% 34%, #2b5875, #183e5c 57%, #13314c); border-radius: 14px; border: 1px solid #214964; box-shadow: 0 22px 45px #173b5914; }
-.orbital-scene { inset: 8% -1% 2%; mix-blend-mode: normal; cursor: default; }
+.hero-visual { position: relative; width: 100%; height: 480px; margin: 0; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.orbital-scene { inset: 0; mix-blend-mode: normal; cursor: default; }
 .orbital-scene canvas { width: 100%; height: 100%; }
-.visual-coordinate { color: #d4e4f1; font-size: 7px; letter-spacing: 1.35px; font-weight: 500; }
-.coordinate-top { top: 27px; left: 27px; }
-.coordinate-bottom { bottom: 23px; right: 22px; font-size: 6px; }
-.tiny-dot { background: #c2d9e9; }
 .glass-badge { color: #163451; background: #ffffffed; border: 1px solid #dce6ed; box-shadow: 0 12px 28px #173b5914; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); }
-.badge-perspective { left: -27px; bottom: 31px; padding: 17px 19px; gap: 12px; border-radius: 9px; animation: none; }
-.badge-icon { color: #2b6487; background: #edf4f8; border: none; width: 40px; height: 40px; border-radius: 8px; }
-.badge-perspective div > span { color: #5e7487; font-size: 6.5px; letter-spacing: 1px; margin-bottom: 7px; }
-.badge-perspective strong { font-size: 11px; font-weight: 550; color: #163451; }
-.badge-progress { right: -20px; top: 91px; width: 153px; height: 152px; padding: 18px 19px; border-radius: 9px; animation: none; }
-.progress-label { color: #5d7487; font-size: 7px; letter-spacing: 1.1px; }
-.analysis-dimensions { display: grid; gap: 8px; font-size: 11px; color: #284b66; margin-top: 17px; }
-.analysis-dimensions > span { display: flex; align-items: center; gap: 8px; }
-.analysis-dimensions > span::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #6d96b1; }
-.progress-arrow { color: #3b718f; right: 13px; bottom: 13px; }
 .hero-bottom { min-height: 112px; border-top: 1px solid #dbe5ed; gap: 30px; }
 .hero-bottom > p { color: #526d83; font-size: 11px; line-height: 1.7; flex-shrink: 0; }
 .hero-bottom > p span { color: #34556e; font-weight: 500; }
@@ -196,7 +182,7 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
 .brand-footer .brand-symbol { width: 34px; height: 36px; }
 .brand-footer .brand-wordmark { font-size: 31px; }
 .brand-footer .brand-subtitle { font-size: 6px; }
-.orbital-fallback { inset: 14%; border-radius: 50%; background: #aaaaaa url('./assets/moon-albedo.jpg') center / 200% 100%; box-shadow: inset -30px 0 55px #000000a0; }
+.orbital-fallback { inset: auto; width: min(85%, 420px); aspect-ratio: 1; left: 70%; top: 50%; transform: translate(-50%, -50%); border-radius: 50%; background: #aaaaaa url('./assets/moon-albedo.jpg') center / 200% 100%; box-shadow: inset -30px 0 55px #000000a0; }
 .orbital-fallback > * { display: none; }
 
 @media (min-width: 1500px) {
@@ -215,9 +201,6 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
   .hero-buttons .button { padding: 15px 18px; gap: 20px; }
   .hero-disciplines { gap: 38px; }
   .hero-disciplines > span { font-size: 13px; }
-  .badge-perspective { left: -20px; padding: 15px; }
-  .badge-perspective strong { font-size: 10px; }
-  .badge-progress { right: -14px; width: 136px; }
   .service-card { padding: 25px 22px 0; }
   .service-card h3 { font-size: 20px; }
   .service-description { font-size: 12px; }
@@ -243,14 +226,6 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
   .hero-buttons { flex-direction: column; align-items: flex-start; gap: 9px; margin-top: 24px; }
   .hero-note { font-size: 10px; margin-top: 18px; }
   .hero-eyebrow { font-size: 7px; letter-spacing: 1.3px; margin-bottom: 22px; }
-  .badge-perspective { left: -15px; bottom: 27px; padding: 13px; gap: 9px; }
-  .badge-perspective div > span { font-size: 5.5px; }
-  .badge-perspective strong { font-size: 9px; }
-  .badge-progress { width: 116px; height: 137px; top: 86px; padding: 14px; right: -10px; }
-  .progress-label { font-size: 6px; }
-  .analysis-dimensions { font-size: 10px; }
-  .coordinate-top { font-size: 5.5px; left: 21px; top: 22px; }
-  .coordinate-bottom { font-size: 5px; right: 16px; }
   .hero-bottom { gap: 22px; }
   .hero-bottom > p { font-size: 10px; }
   .hero-disciplines { gap: 27px; }
@@ -285,10 +260,6 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
   .desktop-nav { gap: 17px; }
   .desktop-nav > a { font-size: 10px; }
   .hero-visual { height: 410px; }
-  .badge-perspective { left: -9px; padding: 11px; }
-  .badge-icon { width: 30px; height: 30px; }
-  .badge-perspective strong { font-size: 8px; }
-  .coordinate-top { font-size: 5px; }
   .hero-disciplines { gap: 18px; }
 }
 @media (max-width: 700px) {
@@ -315,16 +286,8 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
   .hero-buttons .button { min-height: 52px; font-size: 12px; padding: 15px 18px; gap: 19px; }
   .hero-secondary { font-size: 11px; }
   .hero-note { font-size: 10px; margin-top: 21px; }
-  .hero-visual { height: 365px; width: 100%; margin: 35px 0 0; border-radius: 12px; }
-  .orbital-scene { inset: 5% -2% 0; }
-  .coordinate-top { left: 22px; top: 22px; font-size: 5.5px; }
-  .coordinate-bottom { bottom: 18px; right: 18px; font-size: 5px; }
-  .badge-progress { right: 15px; top: 74px; width: 124px; height: 142px; padding: 16px; }
-  .badge-perspective { left: 15px; bottom: 35px; padding: 14px; border-radius: 7px; gap: 9px; }
-  .badge-icon { width: 31px; height: 31px; }
-  .badge-icon svg { width: 19px; height: 19px; }
-  .badge-perspective div > span { font-size: 5.5px; margin-bottom: 5px; }
-  .badge-perspective strong { font-size: 9px; }
+  .hero-visual { height: 365px; width: 100%; margin: 35px 0 0; }
+  .orbital-scene { inset: 0; }
   .hero-bottom { padding: 27px 0; min-height: 0; gap: 0; }
   .hero-bottom > p, .scroll-link { display: none; }
   .hero-disciplines { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; justify-content: initial; gap: 11px; }
@@ -402,9 +365,6 @@ h2 { font-size: clamp(31px, 3.1vw, 43px); line-height: 1.23; letter-spacing: -1.
   .hero-secondary { font-size: 10px; }
   .hero-note { font-size: 9px; }
   .hero-visual { height: 330px; }
-  .badge-progress { right: 12px; width: 112px; padding: 14px; top: 66px; height: 136px; }
-  .badge-perspective { left: 12px; bottom: 31px; padding: 12px; }
-  .badge-perspective strong { font-size: 8px; }
   .hero-disciplines > span { font-size: 10px; }
   .hero-disciplines small { font-size: 9px; }
   .hero-disciplines { gap: 9px; }

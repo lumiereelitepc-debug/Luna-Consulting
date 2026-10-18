@@ -51,8 +51,10 @@ export default function OrbitalScene() {
     // Backlighting from the left forms a waning crescent. Its shadow is made
     // transparent in the lunar material, so the lit texture keeps neutral tones
     // without requiring a CSS blend mode or showing a dark circular disk.
-    const sunlight = new THREE.DirectionalLight(0xffffff, 13);
-    sunlight.position.set(-5.4, 0.45, -4.6);
+    const sunlight = new THREE.DirectionalLight(0xffffff, 10.5);
+    // A little over one quarter is illuminated, always on the left. This
+    // broader arc gives the silver terrain room to read on a light background.
+    sunlight.position.set(-6, 0.4, -3.2);
     scene.add(sunlight);
 
     const geometry = new THREE.SphereGeometry(1.72, 128, 96);
@@ -80,74 +82,12 @@ export default function OrbitalScene() {
     material.customProgramCacheKey = () => 'luna-neutral-crescent-v1';
     const moon = new THREE.Mesh(geometry, material);
     moon.rotation.set(-0.06, -Math.PI / 2, 0.08);
+    // Center the visible crescent rather than the invisible spherical body.
+    // Its tips and floating motion fit in both desktop and mobile canvases.
+    moon.position.x = 0.92;
     const tilt = new THREE.Group();
     tilt.add(moon);
     scene.add(tilt);
-
-    // A seeded field keeps the composition stable across visits. These are
-    // actual points at different depths, so pointer movement reveals parallax.
-    let seed = 4261;
-    function random() {
-      seed = (seed * 1664525 + 1013904223) >>> 0;
-      return seed / 4294967296;
-    }
-    const atmosphere = new THREE.Group();
-    const atmosphereResources = [];
-    function createStars(count, size, opacity, depth) {
-      const positions = new Float32Array(count * 3);
-      for (let index = 0; index < count; index += 1) {
-        positions[index * 3] = (random() - 0.5) * 9;
-        positions[index * 3 + 1] = (random() - 0.5) * 7;
-        positions[index * 3 + 2] = -depth - random() * 3;
-      }
-      const starGeometry = new THREE.BufferGeometry();
-      starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-      const starMaterial = new THREE.PointsMaterial({
-        color: 0xc8e5ff,
-        size,
-        transparent: true,
-        opacity,
-        depthWrite: false,
-        sizeAttenuation: true,
-      });
-      const stars = new THREE.Points(starGeometry, starMaterial);
-      atmosphere.add(stars);
-      atmosphereResources.push(starGeometry, starMaterial);
-      return stars;
-    }
-    const distantStars = createStars(86, 0.027, 0.58, 3.4);
-    const nearStars = createStars(28, 0.043, 0.72, 0.8);
-
-    // The small constellation sits beside the lunar silhouette, never around
-    // it: its open, angular form avoids suggesting a ring or a full moon.
-    const constellationPositions = new Float32Array([
-      1.98, 1.74, -2.5, 2.52, 1.23, -2.0,
-      2.52, 1.23, -2.0, 2.15, 0.57, -1.8,
-      2.15, 0.57, -1.8, 2.77, -0.04, -2.3,
-      2.77, -0.04, -2.3, 2.49, -0.85, -2.0,
-      -2.90, -0.10, -2.8, -2.43, 0.44, -2.5,
-      -2.43, 0.44, -2.5, -2.78, 1.08, -2.8,
-    ]);
-    const constellationGeometry = new THREE.BufferGeometry();
-    constellationGeometry.setAttribute('position', new THREE.BufferAttribute(constellationPositions, 3));
-    const constellationMaterial = new THREE.LineBasicMaterial({
-      color: 0xb3d7f3,
-      transparent: true,
-      opacity: 0.24,
-      depthWrite: false,
-    });
-    const constellation = new THREE.LineSegments(constellationGeometry, constellationMaterial);
-    const constellationNodesMaterial = new THREE.PointsMaterial({
-      color: 0xe1f1ff,
-      size: 0.045,
-      transparent: true,
-      opacity: 0.88,
-      depthWrite: false,
-    });
-    const constellationNodes = new THREE.Points(constellationGeometry, constellationNodesMaterial);
-    atmosphere.add(constellation, constellationNodes);
-    atmosphereResources.push(constellationGeometry, constellationMaterial, constellationNodesMaterial);
-    scene.add(atmosphere);
 
     const albedoTexture = new THREE.TextureLoader().load(moonAlbedoUrl, (texture) => {
       if (disposed) {
@@ -217,10 +157,6 @@ export default function OrbitalScene() {
         0,
       );
       moon.rotation.y = -Math.PI / 2 + elapsed * 0.016;
-      atmosphere.rotation.set(-pointerY * 0.18, -pointerX * 0.24, Math.sin(elapsed * 0.14) * 0.012);
-      distantStars.position.y = Math.sin(elapsed * 0.14) * 0.07;
-      nearStars.position.y = Math.sin(elapsed * 0.24) * 0.11;
-      nearStars.position.x = Math.cos(elapsed * 0.20) * 0.06;
       renderer.render(scene, camera);
       frame = requestAnimationFrame(animate);
     }
@@ -275,7 +211,6 @@ export default function OrbitalScene() {
         pointerY = 0;
         tilt.rotation.set(0, 0, 0);
         tilt.position.set(0, 0, 0);
-        atmosphere.rotation.set(0, 0, 0);
         renderStill();
       }
     }
@@ -319,7 +254,6 @@ export default function OrbitalScene() {
       delete node.dataset.moonReady;
       geometry.dispose();
       material.dispose();
-      atmosphereResources.forEach((resource) => resource.dispose());
       albedoTexture.dispose();
       bumpTexture?.dispose();
       renderer.dispose();

@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, ArrowDown, ArrowRight, Minus, Menu, X, Compass, Orbit, Layers3, Moon, MoveUpRight, Check, Users, ChartNoAxesCombined, Monitor, Asterisk } from 'lucide-react';
+import { ArrowUpRight, ArrowDown, ArrowRight, Minus, Menu, X, Compass, Orbit, Layers3, Check, Users, ChartNoAxesCombined, Monitor, Asterisk } from 'lucide-react';
 import ContactDialog from './components/ContactDialog.jsx';
 import useDepthEffects from './components/useDepthEffects.js';
 
@@ -127,12 +127,8 @@ export default function App() {
             </div>
             <p className="hero-note"><Check size={14} /> Alcance y propuesta definidos para tu negocio.</p>
           </div>
-          <div className="hero-visual" data-motion>
-            <span className="visual-coordinate coordinate-top">LUNA CONSULTING / PERSPECTIVA INTEGRAL</span>
+          <div className="hero-visual">
             <Suspense fallback={<div className="orbital-scene" aria-hidden="true"><div className="orbital-fallback" /></div>}><OrbitalScene /></Suspense>
-            <div className="glass-badge badge-perspective"><div className="badge-icon"><Moon size={22} strokeWidth={1.4} /></div><div><span>DECISIONES CON FUNDAMENTO</span><strong>Una perspectiva para avanzar.</strong></div></div>
-            <div className="glass-badge badge-progress"><span className="progress-label">VISIÓN INTEGRAL</span><div className="analysis-dimensions"><span>Operación</span><span>Clientes</span><span>Comercial</span><span>Digital</span></div><span className="progress-arrow"><MoveUpRight size={19} /></span></div>
-            <span className="visual-coordinate coordinate-bottom"><span className="tiny-dot" /> INVESTIGACIÓN · ESTRATEGIA · MEDICIÓN</span>
           </div>
         </div>
         <div className="hero-bottom page-width">

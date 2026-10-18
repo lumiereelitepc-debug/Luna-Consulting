@@ -16,13 +16,6 @@
 .service-card > :not(.depth-shine), .deliverable-card > :not(.depth-shine) { position: relative; }
 .service-icon, .deliverable-number { transition: transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .4s; }
 
-/* The lunar panel and its glass annotations occupy different depth planes. */
-.hero-visual { isolation: isolate; }
-.hero-visual .badge-perspective { animation: depth-badge 7s ease-in-out infinite; }
-.hero-visual .badge-progress { animation: depth-badge 8s -3s ease-in-out infinite; }
-.hero-visual .glass-badge { animation-play-state: paused; }
-.hero-visual[data-motion-visible="true"] .glass-badge { animation-play-state: running; }
-
 /* Three suspended glass layers echo the methodology without suggesting data. */
 .method-sculpture {
   position: absolute;
@@ -92,7 +85,6 @@
 .strategy-fallback > i:nth-of-type(2) { bottom: 5%; left: -23%; }
 .strategy-fallback > i:nth-of-type(3) { bottom: -18%; right: 15%; }
 
-@keyframes depth-badge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
 @keyframes depth-layer { 0%, 100% { transform: translateZ(var(--layer-z)); } 50% { transform: translateZ(calc(var(--layer-z) + 13px)); } }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
@@ -109,7 +101,7 @@
   .method-sculpture { right: -87px; top: 95px; opacity: .25; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-visual .glass-badge, .method-sculpture-stack > span { animation: none; }
+  .method-sculpture-stack > span { animation: none; }
   [data-depth].is-visible { transform: none; }
   .depth-shine { display: none; }
   .service-card, .deliverable-card, .service-icon, .deliverable-number { transition: none; }
