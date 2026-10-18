@@ -1,0 +1,125 @@
+/* Motion adds depth around the content, while the reading surfaces stay clear. */
+.service-card, .deliverable-card {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: opacity .7s ease var(--reveal-delay, 0ms), transform .5s cubic-bezier(.2,.75,.25,1), border-color .3s, box-shadow .35s, background .3s;
+}
+.depth-shine {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(360px circle at var(--shine-x, 50%) var(--shine-y, 0%), #88bad925, transparent 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+.service-card > :not(.depth-shine), .deliverable-card > :not(.depth-shine) { position: relative; }
+.service-icon, .deliverable-number { transition: transform .45s cubic-bezier(.2,.75,.25,1), box-shadow .4s; }
+
+/* The lunar panel and its glass annotations occupy different depth planes. */
+.hero-visual { isolation: isolate; }
+.hero-visual::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid #b9dbef30;
+  background: radial-gradient(ellipse at 20% 15%, #a2d2ef0e, transparent 65%);
+}
+.hero-visual .badge-perspective { animation: depth-badge 7s ease-in-out infinite; }
+.hero-visual .badge-progress { animation: depth-badge 8s -3s ease-in-out infinite; }
+.hero-visual .glass-badge { animation-play-state: paused; }
+.hero-visual[data-motion-visible="true"] .glass-badge { animation-play-state: running; }
+
+/* Three suspended glass layers echo the methodology without suggesting data. */
+.method-sculpture {
+  position: absolute;
+  width: 180px;
+  height: 230px;
+  right: -48px;
+  top: 80px;
+  perspective: 650px;
+  pointer-events: none;
+  opacity: .65;
+}
+.method-sculpture-stack {
+  position: absolute;
+  inset: 25px 10px;
+  transform: rotateX(55deg) rotateZ(-36deg);
+  transform-style: preserve-3d;
+}
+.method-sculpture-stack > span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #719ebc65;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #eef8ffb3, #d1e7f845);
+  box-shadow: 8px 12px 20px #1634510b, inset 1px 1px 0 #ffffff;
+  transform: translateZ(var(--layer-z));
+  animation: depth-layer 7s ease-in-out infinite;
+  animation-play-state: paused;
+}
+.method-sculpture-stack > span:nth-child(1) { --layer-z: -42px; animation-delay: -2s; }
+.method-sculpture-stack > span:nth-child(2) { --layer-z: 0px; animation-delay: -1s; }
+.method-sculpture-stack > span:nth-child(3) { --layer-z: 42px; }
+.method-sculpture-stack > span::after {
+  content: '';
+  position: absolute;
+  inset: 20%;
+  border-radius: 9px;
+  border: 1px solid #729fbb55;
+  background: linear-gradient(135deg, #ffffffb0, #d9edf644);
+}
+.method-panel[data-motion-visible="true"] .method-sculpture-stack > span { animation-play-state: running; }
+
+/* A second WebGL scene carries the brand's connected perspective. */
+.strategy-scene, .strategy-scene-slot { position: absolute; inset: 0; }
+.strategy-scene canvas { display: block; width: 100%; height: 100%; }
+.about-art-label, .about-art-bottom, .about-floating-label { z-index: 2; pointer-events: none; }
+.about-art { background: radial-gradient(ellipse at 45% 40%, #326885, #173e5c 65%, #163451); }
+.about-art-grid { opacity: .12; pointer-events: none; }
+.strategy-fallback { position: absolute; inset: 24% 28% 27%; perspective: 600px; }
+.strategy-fallback-core {
+  position: absolute;
+  inset: 9%;
+  transform-style: preserve-3d;
+  transform: rotateX(-23deg) rotateY(35deg) rotateZ(-18deg);
+}
+.strategy-fallback-core > span {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #d9efffba;
+  background: linear-gradient(135deg, #cdeaff75, #659cbe40);
+  box-shadow: inset 0 0 30px #c8e5f32b;
+}
+.strategy-fallback-core > span:nth-child(1) { transform: translateZ(45px); }
+.strategy-fallback-core > span:nth-child(2) { transform: rotateY(90deg) translateZ(45px); }
+.strategy-fallback-core > span:nth-child(3) { transform: rotateX(90deg) translateZ(45px); }
+.strategy-fallback > i { position: absolute; width: 15px; height: 15px; border: 1px solid #d2ebfa; background: #8ebbd4; transform: rotate(35deg); }
+.strategy-fallback > i:nth-of-type(1) { top: -12%; right: -19%; }
+.strategy-fallback > i:nth-of-type(2) { bottom: 5%; left: -23%; }
+.strategy-fallback > i:nth-of-type(3) { bottom: -18%; right: 15%; }
+
+@keyframes depth-badge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
+@keyframes depth-layer { 0%, 100% { transform: translateZ(var(--layer-z)); } 50% { transform: translateZ(calc(var(--layer-z) + 13px)); } }
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  [data-depth].is-visible { transform: perspective(1000px) rotateX(var(--depth-x, 0deg)) rotateY(var(--depth-y, 0deg)); }
+  [data-depth-active="true"] { z-index: 2; box-shadow: 0 20px 35px #16345112; }
+  [data-depth-active="true"] > .depth-shine { opacity: 1; }
+  [data-depth-active="true"] .service-icon,
+  [data-depth-active="true"] .deliverable-number { transform: translateZ(22px); box-shadow: 0 9px 15px #16345112; }
+}
+@media (max-width: 1000px) {
+  .method-sculpture { right: -67px; opacity: .4; width: 155px; }
+}
+@media (max-width: 700px) {
+  .method-sculpture { right: -87px; top: 95px; opacity: .25; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-visual .glass-badge, .method-sculpture-stack > span { animation: none; }
+  [data-depth].is-visible { transform: none; }
+  .depth-shine { display: none; }
+  .service-card, .deliverable-card, .service-icon, .deliverable-number { transition: none; }
+}

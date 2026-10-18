@@ -1,8 +1,10 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, ArrowDown, ArrowRight, Minus, Menu, X, Compass, Orbit, Layers3, Moon, MoveUpRight, Check, Users, ChartNoAxesCombined, Monitor, Asterisk } from 'lucide-react';
 import ContactDialog from './components/ContactDialog.jsx';
+import useDepthEffects from './components/useDepthEffects.js';
 
 const OrbitalScene = lazy(() => import('./components/OrbitalScene.jsx'));
+const StrategyScene = lazy(() => import('./components/StrategyScene.jsx'));
 
 const services = [
   { number: '01', icon: Compass, title: 'Diagnóstico estratégico', description: 'Una visión integral de tu negocio para reconocer fortalezas, retos y prioridades.', tags: ['Diagnóstico integral', 'FODA', 'Competencia'], detail: 'Evaluamos operación, servicio, ventas, comunicación y presencia digital. Integramos un análisis FODA y un estudio de negocios comparables para entender tu posicionamiento y detectar oportunidades con información.' },
@@ -39,7 +41,22 @@ function SectionLabel({ children, light = false }) {
   return <p className={`section-label ${light ? 'label-dark' : ''}`}><span className="label-square" />{children}</p>;
 }
 
+function DeferredStrategyScene() {
+  const node = useRef(null);
+  const [active, setActive] = useState(false);
+  useEffect(() => {
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) { setActive(true); observer.disconnect(); }
+    }, { rootMargin: '300px' });
+    observer.observe(node.current);
+    return () => observer.disconnect();
+  }, []);
+  const fallback = <div className="strategy-fallback"><div className="strategy-fallback-core"><span /><span /><span /></div><i /><i /><i /></div>;
+  return <div className="strategy-scene-slot" ref={node}>{active ? <Suspense fallback={fallback}><StrategyScene /></Suspense> : fallback}</div>;
+}
+
 export default function App() {
+  useDepthEffects();
   const [contactOpen, setContactOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [expandedService, setExpandedService] = useState(null);
@@ -110,7 +127,7 @@ export default function App() {
             </div>
             <p className="hero-note"><Check size={14} /> Alcance y propuesta definidos para tu negocio.</p>
           </div>
-          <div className="hero-visual">
+          <div className="hero-visual" data-motion>
             <span className="visual-coordinate coordinate-top">LUNA CONSULTING / PERSPECTIVA INTEGRAL</span>
             <Suspense fallback={<div className="orbital-scene" aria-hidden="true"><div className="orbital-fallback" /></div>}><OrbitalScene /></Suspense>
             <div className="glass-badge badge-perspective"><div className="badge-icon"><Moon size={22} strokeWidth={1.4} /></div><div><span>DECISIONES CON FUNDAMENTO</span><strong>Una perspectiva para avanzar.</strong></div></div>
@@ -129,7 +146,8 @@ export default function App() {
         <div className="page-width">
           <div className="section-heading reveal"><div><SectionLabel light>ÁREAS DE CONSULTORÍA</SectionLabel><h2>Diagnóstico integral.<br /><span>Estrategia de negocio.</span></h2></div><p>Una mirada integral a la estrategia, los clientes,<br />la operación y los canales comerciales y digitales.<br />Cada propuesta parte de lo que tu negocio necesita.</p></div>
           <div className="service-cards">
-            {services.map((service, index) => { const Icon = service.icon; const expanded = expandedService === index; return <article className="service-card reveal" data-expanded={expanded} key={service.number} style={{ '--reveal-delay': `${index % 3 * 100}ms` }}>
+            {services.map((service, index) => { const Icon = service.icon; const expanded = expandedService === index; return <article className="service-card reveal" data-depth data-expanded={expanded} key={service.number} style={{ '--reveal-delay': `${index % 3 * 100}ms` }}>
+              <span className="depth-shine" aria-hidden="true" />
               <div className="service-top"><div className="service-icon"><Icon size={29} strokeWidth={1.2} /></div><span className="service-number">/ {service.number}</span></div>
               <h3>{service.title}</h3><p className="service-description">{service.description}</p>
               <div className="service-tags">{service.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
@@ -146,9 +164,9 @@ export default function App() {
           <div className="section-heading reveal"><div><SectionLabel>NUESTRA METODOLOGÍA</SectionLabel><h2>De la información<br /><span>a la decisión.</span></h2></div><p>Cinco etapas que conectan investigación,<br />análisis, diagnóstico, estrategia<br />e implementación con medición.</p></div>
           <div className="method-layout reveal">
             <div className="method-steps" role="tablist" aria-orientation="vertical" aria-label="Etapas de nuestra metodología">{steps.map((item, index) => <button key={item.name} role="tab" id={`step-tab-${index}`} aria-selected={activeStep === index} aria-controls="method-panel" tabIndex={activeStep === index ? 0 : -1} className={activeStep === index ? 'step-active' : ''} onClick={() => setActiveStep(index)} onKeyDown={(event) => { if (['ArrowDown', 'ArrowUp', 'ArrowRight', 'ArrowLeft', 'Home', 'End'].includes(event.key)) { event.preventDefault(); const next = event.key === 'Home' ? 0 : event.key === 'End' ? steps.length - 1 : (index + (['ArrowDown', 'ArrowRight'].includes(event.key) ? 1 : steps.length - 1)) % steps.length; setActiveStep(next); document.getElementById(`step-tab-${next}`)?.focus(); } }}><span className="step-number">0{index + 1}</span><span>{item.name}</span><ArrowUpRight size={21} /></button>)}</div>
-            <div className="method-panel glass-panel" id="method-panel" role="tabpanel" aria-labelledby={`step-tab-${activeStep}`} tabIndex={0}>
+            <div className="method-panel glass-panel" data-motion id="method-panel" role="tabpanel" aria-labelledby={`step-tab-${activeStep}`} tabIndex={0}>
               <div className="method-panel-content" key={activeStep}><span className="panel-eyebrow">{step.label}</span><h3>{step.title}</h3><p>{step.text}</p><ul>{step.items.map((item) => <li key={item}><Check size={16} />{item}</li>)}</ul></div>
-              <div className="method-panel-orbit" aria-hidden="true"><div /><div /><div /><span>0{activeStep + 1}</span></div>
+              <div className="method-sculpture" aria-hidden="true"><div className="method-sculpture-stack"><span /><span /><span /></div></div>
               <span className="panel-corner" aria-hidden="true">+</span>
             </div>
           </div>
@@ -158,14 +176,14 @@ export default function App() {
       <section id="entregables" className="deliverables section-light">
         <div className="page-width">
           <div className="section-heading reveal"><div><SectionLabel light>ENTREGABLES DEL PROYECTO</SectionLabel><h2>Recomendaciones concretas.<br /><span>Decisiones respaldadas.</span></h2></div><p>Documentos, recomendaciones y capacitación<br />para convertir la información en decisiones.<br />Los entregables se definen según el alcance acordado.</p></div>
-          <div className="deliverable-grid">{deliverables.map((item, index) => <article key={item.number} className="deliverable-card reveal" style={{ '--reveal-delay': `${index % 2 * 100}ms` }}><div className="deliverable-heading"><span className="deliverable-number">{item.number}</span><h3>{item.title}</h3></div><ul>{item.items.map((text) => <li key={text}><Check size={15} />{text}</li>)}</ul></article>)}</div>
+          <div className="deliverable-grid">{deliverables.map((item, index) => <article key={item.number} className="deliverable-card reveal" data-depth style={{ '--reveal-delay': `${index % 2 * 100}ms` }}><span className="depth-shine" aria-hidden="true" /><div className="deliverable-heading"><span className="deliverable-number">{item.number}</span><h3>{item.title}</h3></div><ul>{item.items.map((text) => <li key={text}><Check size={15} />{text}</li>)}</ul></article>)}</div>
           <div className="deliverable-note reveal"><span className="label-square" /><p>Tu proyecto, a tu medida. Definimos contigo el alcance, los tiempos y la inversión después de la reunión inicial.</p><button onClick={openContact}>Preparemos tu diagnóstico <ArrowUpRight size={17} /></button></div>
         </div>
       </section>
 
       <section id="nosotros" className="about section-light">
         <div className="page-width about-layout">
-          <div className="about-art reveal" aria-hidden="true"><div className="about-art-grid" /><div className="about-moon" /><span className="about-art-label">PERSPECTIVA / PROPÓSITO</span><span className="about-art-bottom">LUNA CONSULTING <ArrowUpRight size={17} /></span><div className="about-floating-label glass-badge"><span className="status-dot" /> Una mirada integral. Una dirección definida.</div></div>
+          <div className="about-art reveal" aria-hidden="true"><div className="about-art-grid" /><DeferredStrategyScene /><span className="about-art-label">CONEXIONES / VISIÓN ESTRATÉGICA</span><span className="about-art-bottom">LUNA CONSULTING <ArrowUpRight size={17} /></span><div className="about-floating-label glass-badge"><span className="status-dot" /> Una mirada integral. Una dirección definida.</div></div>
           <div className="about-copy reveal"><SectionLabel light>LA FIRMA</SectionLabel><h2>Perspectiva estratégica.<br /><span>Compromiso con la acción.</span></h2><p>La luna representa nuestra forma de abordar cada proyecto: observar el contexto, identificar lo que no es evidente y construir una perspectiva completa antes de tomar decisiones.</p><p>En Luna Consulting conectamos diagnóstico, experiencia del cliente, operación, desarrollo comercial y presencia digital. Nuestro trabajo convierte los hallazgos en recomendaciones, capacitación y un plan de mejora que puedas usar para decidir.</p><div className="about-values"><span><span className="value-dot" /> Análisis riguroso</span><span><span className="value-dot" /> Trabajo cercano</span><span><span className="value-dot" /> Acciones medibles</span></div><button className="text-button" onClick={openContact}>Conversemos sobre tu negocio <ArrowUpRight size={20} /></button></div>
         </div>
       </section>
